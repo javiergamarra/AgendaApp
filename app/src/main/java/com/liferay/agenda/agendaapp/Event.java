@@ -1,6 +1,8 @@
 package com.liferay.agenda.agendaapp;
 
-public class Event {
+import java.io.Serializable;
+
+public class Event implements Serializable {
 
 	private final String hour;
 	private final String name;
