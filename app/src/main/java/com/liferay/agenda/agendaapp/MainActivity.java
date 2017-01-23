@@ -3,6 +3,7 @@ package com.liferay.agenda.agendaapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -18,6 +19,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 		View row = findViewById(R.id.row);
 		row.setOnClickListener(this);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+
+		Log.d("Agenda", "Resume");
 	}
 
 	@Override
