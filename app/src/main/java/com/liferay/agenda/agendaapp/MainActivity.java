@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -24,8 +26,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		//row.setOnClickListener(this);
 
 		ListView listView = (ListView) findViewById(R.id.list);
-		String[] list = new String[] { "uno", "dos" };
-		listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list));
+		List<Event> list = new ArrayList();
+		list.add(new Event("09:00", "Android Workshop"));
+		list.add(new Event("09:30", "SemVer"));
+		listView.setAdapter(new EventAdapter(this, R.layout.row, list));
 	}
 
 	@Override
