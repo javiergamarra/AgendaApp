@@ -14,8 +14,8 @@ import java.util.List;
 
 class EventAdapter extends ArrayAdapter<Event> implements View.OnClickListener {
 
-	public EventAdapter(MainActivity mainActivity, int row, List<Event> list) {
-		super(mainActivity, row, list);
+	public EventAdapter(MainActivity mainActivity, int row, List<Event> events) {
+		super(mainActivity, row, events);
 	}
 
 	@NonNull
