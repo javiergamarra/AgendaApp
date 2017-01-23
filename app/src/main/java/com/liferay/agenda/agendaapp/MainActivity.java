@@ -2,11 +2,11 @@ package com.liferay.agenda.agendaapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -17,11 +17,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		ImageButton imageButton = (ImageButton) findViewById(R.id.image_button);
-		imageButton.setOnClickListener(this);
+		//ImageButton imageButton = (ImageButton) findViewById(R.id.image_button);
+		//imageButton.setOnClickListener(this);
+		//
+		//View row = findViewById(R.id.row);
+		//row.setOnClickListener(this);
 
-		View row = findViewById(R.id.row);
-		row.setOnClickListener(this);
+		ListView listView = (ListView) findViewById(R.id.list);
+		String[] list = new String[] { "uno", "dos" };
+		listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list));
 	}
 
 	@Override
