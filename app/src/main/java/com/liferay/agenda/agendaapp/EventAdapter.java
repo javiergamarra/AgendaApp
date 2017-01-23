@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import com.squareup.picasso.Picasso;
 import java.util.List;
 
 class EventAdapter extends ArrayAdapter<Event> implements View.OnClickListener {
@@ -30,7 +32,10 @@ class EventAdapter extends ArrayAdapter<Event> implements View.OnClickListener {
 		TextView text = (TextView) convertView.findViewById(R.id.event_text);
 		text.setText(event.getName());
 
-		convertView.findViewById(R.id.image_button).setOnClickListener(this);
+		ImageButton imageButton = (ImageButton) convertView.findViewById(R.id.image_button);
+
+		Picasso.with(getContext()).load("http://i.imgur.com/DvpvklR.png").resize(80, 80).into(imageButton);
+		imageButton.setOnClickListener(this);
 
 		return convertView;
 	}
