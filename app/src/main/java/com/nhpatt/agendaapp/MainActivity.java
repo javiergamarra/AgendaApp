@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -29,6 +30,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         favorite = !favorite;
         int id = favorite ? R.drawable.favorite : R.drawable.favorite_border;
         favoriteImage.setImageDrawable(ContextCompat.getDrawable(this, id));
+
+        if (favorite) {
+            Toast.makeText(this, "Favorite!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 }
