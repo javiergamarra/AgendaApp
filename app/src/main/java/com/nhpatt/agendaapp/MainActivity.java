@@ -1,5 +1,6 @@
 package com.nhpatt.agendaapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -21,20 +22,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         favoriteImage.setColorFilter(getResources().getColor(R.color.colorPrimary));
         favoriteImage.setOnClickListener(this);
 
+        findViewById(R.id.row).setOnClickListener(this);
+
         Log.d("TAG", "Hi!");
     }
 
     @Override
     public void onClick(View v) {
-        ImageView favoriteImage = (ImageView) v;
-        favorite = !favorite;
-        int id = favorite ? R.drawable.favorite : R.drawable.favorite_border;
-        favoriteImage.setImageDrawable(ContextCompat.getDrawable(this, id));
+        if (v.getId() == R.id.row) {
+            startActivity(new Intent(this, DetailTalkActivity.class));
+        } else {
 
-        if (favorite) {
-            Toast.makeText(this, "Favorite!", Toast.LENGTH_SHORT).show();
+            ImageView favoriteImage = (ImageView) v;
+            favorite = !favorite;
+            int id = favorite ? R.drawable.favorite : R.drawable.favorite_border;
+            favoriteImage.setImageDrawable(ContextCompat.getDrawable(this, id));
+
+            if (favorite) {
+                Toast.makeText(this, "Favorite!", Toast.LENGTH_SHORT).show();
+            }
         }
-
     }
 
 }
