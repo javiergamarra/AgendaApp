@@ -9,9 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.List;
+
 public class TalkAdapter extends ArrayAdapter<String> {
 
-    public TalkAdapter(Context context, String[] elements) {
+    public TalkAdapter(Context context, List<String> elements) {
         super(context, R.layout.row, elements);
     }
 
