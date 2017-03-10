@@ -2,6 +2,7 @@ package com.nhpatt.agendaapp;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
@@ -13,5 +14,7 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView favoriteImage = (ImageView) findViewById(R.id.favorite_image);
         favoriteImage.setColorFilter(getResources().getColor(R.color.colorPrimary));
+
+        Log.d("TAG", "Hi!");
     }
 }
