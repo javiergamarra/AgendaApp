@@ -11,14 +11,16 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    public static final String FAVORITE_STATE = "FAVORITE_STATE";
     private boolean favorite;
+    private ImageView favoriteImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ImageView favoriteImage = (ImageView) findViewById(R.id.favorite_image);
+        favoriteImage = (ImageView) findViewById(R.id.favorite_image);
         favoriteImage.setColorFilter(getResources().getColor(R.color.colorPrimary));
         favoriteImage.setOnClickListener(this);
 
@@ -28,20 +30,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        fillHeartIfSelected();
+    }
+
+    @Override
     public void onClick(View v) {
         if (v.getId() == R.id.row) {
             startActivity(new Intent(this, DetailTalkActivity.class));
         } else {
-
-            ImageView favoriteImage = (ImageView) v;
             favorite = !favorite;
-            int id = favorite ? R.drawable.favorite : R.drawable.favorite_border;
-            favoriteImage.setImageDrawable(ContextCompat.getDrawable(this, id));
+            fillHeartIfSelected();
 
             if (favorite) {
                 Toast.makeText(this, "Favorite!", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(FAVORITE_STATE, favorite);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        favorite = savedInstanceState.getBoolean(FAVORITE_STATE);
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    private void fillHeartIfSelected() {
+        int id = favorite ? R.drawable.favorite : R.drawable.favorite_border;
+        favoriteImage.setImageDrawable(ContextCompat.getDrawable(this, id));
     }
 
 }
