@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="10dp"
-            android:src="@drawable/ic_favorite_border_black_24dp" />
+            android:src="@drawable/favorite_border" />
     </LinearLayout>
 
 
@@ -58,7 +58,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_favorite_border_black_24dp" />
+            android:src="@drawable/favorite_border" />
     </LinearLayout>
 
 </LinearLayout>
