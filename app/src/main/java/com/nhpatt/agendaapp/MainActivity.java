@@ -6,7 +6,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -27,6 +29,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.row).setOnClickListener(this);
 
         Log.d("TAG", "Hi!");
+
+        ListView listView = (ListView) findViewById(R.id.list);
+        String[] strings = {"uno", "dos"};
+        listView.setAdapter(new TalkAdapter(this, strings));
     }
 
     @Override

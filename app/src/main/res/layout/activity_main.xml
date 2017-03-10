@@ -62,4 +62,9 @@
             android:src="@drawable/favorite_border" />
     </LinearLayout>
 
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>
