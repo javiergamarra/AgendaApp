@@ -1,34 +1,49 @@
 package com.nhpatt.agendaapp;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.List;
 
-public class TalkAdapter extends ArrayAdapter<String> {
+public class TalkAdapter extends RecyclerView.Adapter<TalkAdapter.TalkViewHolder> {
 
-    public TalkAdapter(Context context, List<String> elements) {
-        super(context, R.layout.row, elements);
+    private final List<String> items;
+
+    public TalkAdapter(List<String> items) {
+        this.items = items;
     }
 
-    @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public TalkViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row, parent, false);
+        return new TalkViewHolder(view);
+    }
 
-        if (convertView == null) {
-            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row, parent, false);
+    @Override
+    public void onBindViewHolder(TalkViewHolder holder, int position) {
+        holder.paint(items.get(position));
+    }
+
+    @Override
+    public int getItemCount() {
+        return items.size();
+    }
+
+    public class TalkViewHolder extends RecyclerView.ViewHolder {
+
+        private final TextView name;
+
+        public TalkViewHolder(View itemView) {
+            super(itemView);
+
+            name = (TextView) itemView.findViewById(R.id.name);
         }
 
-        TextView name = (TextView) convertView.findViewById(R.id.name);
-        name.setText(getItem(position));
-
-
-        return convertView;
+        public void paint(String s) {
+            name.setText(s);
+        }
     }
 }

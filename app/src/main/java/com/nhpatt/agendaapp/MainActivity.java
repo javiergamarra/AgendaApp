@@ -4,23 +4,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final String FAVORITE_STATE = "FAVORITE_STATE";
     private boolean favorite;
     private ImageView favoriteImage;
-    private List<String> strings = new ArrayList<>();
-    private TalkAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +33,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Log.d("TAG", "Hi!");
 
-        ListView listView = (ListView) findViewById(R.id.list);
+        List<String> strings = new ArrayList<>();
         strings.add("uno");
         strings.add("dos");
-        adapter = new TalkAdapter(this, strings);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(this);
+
+        RecyclerView listView = (RecyclerView) findViewById(R.id.list);
+        listView.setLayoutManager(new LinearLayoutManager(this));
+        listView.setAdapter(new TalkAdapter(strings));
     }
 
     @Override
@@ -81,9 +80,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         favoriteImage.setImageDrawable(ContextCompat.getDrawable(this, id));
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        strings.add("tres");
-        adapter.notifyDataSetChanged();
-    }
 }
