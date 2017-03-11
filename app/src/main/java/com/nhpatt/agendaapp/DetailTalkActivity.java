@@ -2,11 +2,9 @@ package com.nhpatt.agendaapp;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.widget.TextView;
 
 public class DetailTalkActivity extends AppCompatActivity {
-
-    public static final String TAG = "AgendaApp";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,7 +12,9 @@ public class DetailTalkActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail_talk);
 
         Talk talk = (Talk) getIntent().getSerializableExtra("talk");
-        Log.d(TAG, talk.getTitle());
+
+        TextView title = (TextView) findViewById(R.id.title);
+        title.setText(talk.getTitle());
     }
 
 
