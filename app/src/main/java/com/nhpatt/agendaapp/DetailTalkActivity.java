@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 public class DetailTalkActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
@@ -24,6 +26,14 @@ public class DetailTalkActivity extends AppCompatActivity implements View.OnClic
 
         TextView time = (TextView) findViewById(R.id.talk_time);
         time.setText(talk.getTime());
+
+        TextView speaker = (TextView) findViewById(R.id.speaker_name);
+        speaker.setText(talk.getSpeaker());
+
+        Picasso.with(this)
+                .load(talk.getPicture())
+                .resize(200, 200)
+                .into((ImageView) findViewById(R.id.speaker_image));
 
         Button addPhotograph = (Button) findViewById(R.id.add_photo);
         addPhotograph.setOnClickListener(this);

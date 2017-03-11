@@ -13,8 +13,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final List<Talk> talks = new ArrayList<Talk>() {{
-        add(new Talk("09:00", "Reactive Programming and RxJava2"));
-        add(new Talk("10:00", "Workshop of Android Programming"));
+        add(new Talk("09:00", "Reactive Programming and RxJava2", "Jorge Barroso", "https://pbs.twimg.com/profile_images/768819154157731840/4vPCyGBh.jpg"));
+        add(new Talk("10:00", "Workshop of Android Programming", "Jorge Barroso", "https://pbs.twimg.com/profile_images/768819154157731840/4vPCyGBh.jpg"));
     }};
 
     private TalkAdapter adapter;
