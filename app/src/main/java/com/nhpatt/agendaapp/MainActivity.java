@@ -1,5 +1,6 @@
 package com.nhpatt.agendaapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,11 +10,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private static List<Talk> talks;
 
-    private TalkAdapter adapter;
+    private static TalkAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,35 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void loadTalks() {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://data.agenda.wedeploy.io/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        TalksService service = retrofit.create(TalksService.class);
-
-        Call<List<Talk>> call = service.allTalks();
-        call.enqueue(new Callback<List<Talk>>() {
-            @Override
-            public void onResponse(Call<List<Talk>> call, Response<List<Talk>> response) {
-
-                List<Talk> elements = response.body();
-                SharedPreferences sharedPreferences = getSharedPreferences();
-                for (Talk talk : elements) {
-                    talk.setFavorited(sharedPreferences.getBoolean(String.valueOf(talk.getId()), false));
-                }
-
-                talks = elements;
-                RecyclerView listView = (RecyclerView) findViewById(R.id.list);
-                listView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-                adapter = new TalkAdapter(MainActivity.this, talks, MainActivity.this);
-                listView.setAdapter(adapter);
-            }
-
-            @Override
-            public void onFailure(Call<List<Talk>> call, Throwable t) {
-
-            }
-        });
+        new Thread(new TalkProcessor(new WeakReference<>(this))).start();
     }
 
     @Override
@@ -88,5 +61,49 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private SharedPreferences getSharedPreferences() {
         return getSharedPreferences("AgendaApp", Context.MODE_PRIVATE);
+    }
+
+    private static class TalkProcessor implements Runnable {
+        private final WeakReference<MainActivity> activityWeakReference;
+
+        public TalkProcessor(WeakReference<MainActivity> activityWeakReference) {
+            this.activityWeakReference = activityWeakReference;
+        }
+
+        public void run() {
+            try {
+                Retrofit retrofit = new Retrofit.Builder().baseUrl("http://data.agenda.wedeploy.io/")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+
+                TalksService service = retrofit.create(TalksService.class);
+
+                final Call<List<Talk>> call = service.allTalks();
+                List<Talk> elements = call.execute().body();
+
+                final MainActivity activity = activityWeakReference.get();
+                if (activity != null) {
+
+                    SharedPreferences sharedPreferences = activity.getSharedPreferences();
+                    for (Talk talk : elements) {
+                        talk.setFavorited(sharedPreferences.getBoolean(String.valueOf(talk.getId()), false));
+                    }
+
+                    talks = elements;
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            RecyclerView listView = (RecyclerView) activity.findViewById(R.id.list);
+                            listView.setLayoutManager(new LinearLayoutManager(activity));
+                            adapter = new TalkAdapter(activity, talks, activity);
+                            listView.setAdapter(adapter);
+                        }
+                    });
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
