@@ -1,6 +1,8 @@
 package com.nhpatt.agendaapp;
 
-public class Talk {
+import java.io.Serializable;
+
+public class Talk implements Serializable {
 
     private String title;
     private String time;

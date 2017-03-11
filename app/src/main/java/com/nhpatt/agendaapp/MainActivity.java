@@ -32,10 +32,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        Integer position = (Integer) v.getTag();
+        Talk talk = talks.get(position);
         if (v.getId() == R.id.row) {
-            startActivity(new Intent(this, DetailTalkActivity.class));
+            Intent intent = new Intent(this, DetailTalkActivity.class);
+            intent.putExtra("talk", talk);
+            startActivity(intent);
         } else {
-            Talk talk = talks.get((Integer) v.getTag());
             talk.setFavorited(!talk.isFavorited());
             adapter.notifyDataSetChanged();
         }
