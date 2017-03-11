@@ -1,6 +1,8 @@
 package com.nhpatt.agendaapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,7 +45,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         call.enqueue(new Callback<List<Talk>>() {
             @Override
             public void onResponse(Call<List<Talk>> call, Response<List<Talk>> response) {
-                talks = response.body();
+
+                List<Talk> elements = response.body();
+                SharedPreferences sharedPreferences = getSharedPreferences();
+                for (Talk talk : elements) {
+                    talk.setFavorited(sharedPreferences.getBoolean(String.valueOf(talk.getId()), false));
+                }
+
+                talks = elements;
                 RecyclerView listView = (RecyclerView) findViewById(R.id.list);
                 listView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
                 adapter = new TalkAdapter(MainActivity.this, talks, MainActivity.this);
@@ -67,7 +76,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         } else {
             talk.setFavorited(!talk.isFavorited());
+
+            getSharedPreferences()
+                    .edit()
+                    .putBoolean(String.valueOf(talk.getId()), talk.isFavorited())
+                    .commit();
+
             adapter.notifyDataSetChanged();
         }
+    }
+
+    private SharedPreferences getSharedPreferences() {
+        return getSharedPreferences("AgendaApp", Context.MODE_PRIVATE);
     }
 }

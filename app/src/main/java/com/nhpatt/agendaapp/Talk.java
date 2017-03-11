@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 public class Talk implements Serializable {
 
+    private Long id;
     @SerializedName("speaker")
     private final String speaker;
     private final String picture;
@@ -13,13 +14,20 @@ public class Talk implements Serializable {
     private final String time;
     private boolean favorited;
 
-
     public Talk(String time, String title, String speaker, String picture) {
         this.time = time;
         this.title = title;
         this.favorited = false;
         this.speaker = speaker;
         this.picture = picture;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
