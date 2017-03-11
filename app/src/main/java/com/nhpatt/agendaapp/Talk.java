@@ -1,9 +1,12 @@
 package com.nhpatt.agendaapp;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class Talk implements Serializable {
 
+    @SerializedName("speaker")
     private final String speaker;
     private final String picture;
     private final String title;
