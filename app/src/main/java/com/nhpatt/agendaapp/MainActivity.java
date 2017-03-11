@@ -32,7 +32,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        talks = new ArrayList<>();
+        talks = getLastNonConfigurationInstance() == null ?
+                new ArrayList<Talk>() : (List<Talk>) getLastCustomNonConfigurationInstance();
+
         adapter = new TalkAdapter(this, talks, this);
         RecyclerView listView = (RecyclerView) findViewById(R.id.list);
         listView.setLayoutManager(new LinearLayoutManager(this));
@@ -56,17 +58,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        outState.putSerializable("talks", (ArrayList<Talk>) talks);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
-        talks = (List<Talk>) savedInstanceState.getSerializable("talks");
+    public Object onRetainCustomNonConfigurationInstance() {
+        return talks;
     }
 
     private void loadTalks() {
