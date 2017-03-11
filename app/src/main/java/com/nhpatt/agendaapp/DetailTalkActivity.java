@@ -13,9 +13,11 @@ public class DetailTalkActivity extends AppCompatActivity {
 
         Talk talk = (Talk) getIntent().getSerializableExtra("talk");
 
-        TextView title = (TextView) findViewById(R.id.title);
+        TextView title = (TextView) findViewById(R.id.talk_title);
         title.setText(talk.getTitle());
-    }
 
+        TextView time = (TextView) findViewById(R.id.talk_time);
+        time.setText(talk.getTime());
+    }
 
 }
