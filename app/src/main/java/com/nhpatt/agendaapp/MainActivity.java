@@ -20,6 +20,7 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
+import com.nhpatt.agendaapp.fragments.ExampleFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -77,6 +78,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         permissionToken.continuePermissionRequest();
                     }
                 }).check();
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragment_container, new ExampleFragment())
+                .commit();
     }
 
     @Override
