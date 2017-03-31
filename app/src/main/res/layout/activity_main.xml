@@ -4,6 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <fragment
+        android:id="@+id/fragment"
+        android:name="com.nhpatt.agendaapp.fragments.ExampleFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="match_parent"
