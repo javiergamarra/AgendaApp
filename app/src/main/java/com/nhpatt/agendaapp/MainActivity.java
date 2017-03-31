@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -28,16 +30,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private List<Talk> talks;
     private TalkAdapter adapter;
 
+    @BindView(R.id.list)
+    RecyclerView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ButterKnife.bind(this);
+
         talks = getLastNonConfigurationInstance() == null ?
                 new ArrayList<Talk>() : (List<Talk>) getLastCustomNonConfigurationInstance();
 
         adapter = new TalkAdapter(this, talks, this);
-        RecyclerView listView = (RecyclerView) findViewById(R.id.list);
         listView.setLayoutManager(new LinearLayoutManager(this));
         listView.setAdapter(adapter);
     }
