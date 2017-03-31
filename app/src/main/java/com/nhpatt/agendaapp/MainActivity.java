@@ -24,6 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    public static final String TAG = "AgendaApp";
     private List<Talk> talks;
     private TalkAdapter adapter;
 
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 EventBus.getDefault().post(elements);
 
             } catch (IOException e) {
-                Log.e("TAG", e.getMessage());
+                Log.e(TAG, e.getMessage());
             }
         }
     }
