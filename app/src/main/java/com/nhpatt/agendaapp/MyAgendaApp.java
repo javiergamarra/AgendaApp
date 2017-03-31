@@ -9,6 +9,9 @@ import android.util.Log;
 import com.nhpatt.agendaapp.sql.DBHelper;
 import com.squareup.leakcanary.LeakCanary;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
+
 public class MyAgendaApp extends Application {
 
     @Override
@@ -24,7 +27,23 @@ public class MyAgendaApp extends Application {
         }
         LeakCanary.install(this);
 
-        storeAndRead();
+//        storeAndRead();
+        storeAndReadWithRealm();
+    }
+
+    private void storeAndReadWithRealm() {
+
+        Realm.init(this);
+
+        Realm realm = Realm.getDefaultInstance();
+
+        realm.beginTransaction();
+        Talk talk = new Talk("09:00", "title", "speaker", "");
+        realm.copyToRealm(talk);
+        realm.commitTransaction();
+
+        final RealmResults<Talk> talks = realm.where(Talk.class).findAll();
+        System.out.println(talks);
     }
 
     private void storeAndRead() {

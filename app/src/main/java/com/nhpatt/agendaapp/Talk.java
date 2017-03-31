@@ -4,15 +4,21 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class Talk implements Serializable {
+import io.realm.RealmObject;
+
+public class Talk extends RealmObject implements Serializable {
 
     private Long id;
     @SerializedName("speaker")
-    private final String speaker;
-    private final String picture;
-    private final String title;
-    private final String time;
+    private String speaker;
+    private String picture;
+    private String title;
+    private String time;
     private boolean favorited;
+
+    public Talk() {
+        super();
+    }
 
     public Talk(String time, String title, String speaker, String picture) {
         this.time = time;
