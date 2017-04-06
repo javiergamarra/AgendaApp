@@ -66,12 +66,7 @@ public class DetailTalkActivity extends AppCompatActivity implements View.OnClic
             public void onResponse(Call call, Response response) throws IOException {
                 final String bio = parse(response.body().string());
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        speakerBio.setText(Html.fromHtml(bio));
-                    }
-                });
+                runOnUiThread(() -> speakerBio.setText(Html.fromHtml(bio)));
             }
 
             @Override

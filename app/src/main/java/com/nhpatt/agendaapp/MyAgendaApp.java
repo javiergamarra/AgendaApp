@@ -88,6 +88,8 @@ public class MyAgendaApp extends Application implements GoogleApiClient.Connecti
         while (talks.moveToNext()) {
             System.out.println(talks.getInt(0));
         }
+
+        talks.close();
         readableDatabase.close();
     }
 

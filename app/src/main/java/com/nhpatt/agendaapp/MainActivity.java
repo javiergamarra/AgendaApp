@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ButterKnife.bind(this);
 
         talks = getLastNonConfigurationInstance() == null ?
-                new ArrayList<Talk>() : (List<Talk>) getLastCustomNonConfigurationInstance();
+                new ArrayList<>() : (List<Talk>) getLastCustomNonConfigurationInstance();
 
         adapter = new TalkAdapter(this, talks, this);
         listView.setLayoutManager(new LinearLayoutManager(this));

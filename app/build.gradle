@@ -3,20 +3,24 @@ apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion '25.0.2'
     defaultConfig {
-        applicationId "com.nhpatt.agendaapp"
+        applicationId 'com.nhpatt.agendaapp'
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        versionName '1.0'
+        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
     }
 }
 
@@ -37,32 +41,32 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
 
-    compile 'com.karumi:dexter:4.0.0'
+    compile 'com.karumi:dexter:4.1.0'
     compile 'com.google.android.gms:play-services-location:10.2.1'
 
-    testCompile "org.robolectric:robolectric:3.1.4"
+    testCompile 'org.robolectric:robolectric:3.1.4'
     testCompile 'org.mockito:mockito-core:2.4.3'
     testCompile 'com.squareup.okhttp3:mockwebserver:3.6.0'
     testCompile 'org.khronos:opengl-api:gl1.1-android-2.1_r1'
 
-    compile "com.android.support.test.espresso:espresso-idling-resource:2.2.2"
-    androidTestCompile("com.android.support.test:runner:0.5") {
+    compile 'com.android.support.test.espresso:espresso-idling-resource:2.2.2'
+    androidTestCompile('com.android.support.test:runner:0.5') {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
-    androidTestCompile("com.android.support.test:rules:0.5") {
+    androidTestCompile('com.android.support.test:rules:0.5') {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
-    androidTestCompile("com.android.support.test.espresso:espresso-core:2.2.2") {
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2') {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
-    androidTestCompile("com.android.support.test.espresso:espresso-contrib:2.2.2") {
+    androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.2.2') {
         exclude group: 'com.android.support', module: 'support-annotations'
         exclude group: 'com.android.support', module: 'appcompat-v7'
         exclude group: 'com.android.support', module: 'support-v4'
         exclude group: 'com.android.support', module: 'design'
         exclude module: 'recyclerview-v7'
     }
-    androidTestCompile("com.android.support.test.espresso:espresso-intents:2.2.2") {
+    androidTestCompile('com.android.support.test.espresso:espresso-intents:2.2.2') {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
 
