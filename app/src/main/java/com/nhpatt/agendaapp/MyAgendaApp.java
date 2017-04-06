@@ -3,6 +3,8 @@ package com.nhpatt.agendaapp;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
@@ -24,13 +26,14 @@ import io.realm.RealmResults;
 
 public class MyAgendaApp extends Application implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
+    public static final String TAG = "MyAgendaApp";
     private GoogleApiClient apiClient;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        Log.d(MainActivity.TAG, "Creating app...");
+        Log.d(TAG, "Creating app...");
 
         if (LeakCanary.isInAnalyzerProcess(this)) {
             // This process is dedicated to LeakCanary for heap analysis.
@@ -97,7 +100,7 @@ public class MyAgendaApp extends Application implements GoogleApiClient.Connecti
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         Location location = LocationServices.FusedLocationApi.getLastLocation(apiClient);
-        Log.d(MainActivity.TAG, String.valueOf(location));
+        Log.d(TAG, String.valueOf(location));
 
         LocationRequest locationRequest = new LocationRequest();
         locationRequest.setFastestInterval(1000);
@@ -119,6 +122,10 @@ public class MyAgendaApp extends Application implements GoogleApiClient.Connecti
 
     @Override
     public void onLocationChanged(Location location) {
-        Log.d(MainActivity.TAG, String.valueOf(location));
+        Log.d(TAG, String.valueOf(location));
+    }
+
+    public SharedPreferences getSharedPreferences() {
+        return getSharedPreferences("AgendaApp", Context.MODE_PRIVATE);
     }
 }

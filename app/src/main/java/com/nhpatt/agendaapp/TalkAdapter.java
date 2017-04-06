@@ -13,7 +13,7 @@ import java.util.List;
 
 public class TalkAdapter extends RecyclerView.Adapter<TalkAdapter.TalkViewHolder> {
 
-    private final List<Talk> talks;
+    private List<Talk> talks;
     private final View.OnClickListener onClickListener;
     private Context context;
 
@@ -21,6 +21,11 @@ public class TalkAdapter extends RecyclerView.Adapter<TalkAdapter.TalkViewHolder
         this.talks = talks;
         this.context = context;
         this.onClickListener = onClickListener;
+    }
+
+    public void swapTalks(List<Talk> talks) {
+        this.talks = talks;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -37,6 +42,10 @@ public class TalkAdapter extends RecyclerView.Adapter<TalkAdapter.TalkViewHolder
     @Override
     public int getItemCount() {
         return talks.size();
+    }
+
+    public Talk getTalks(Integer tag) {
+        return talks.get(tag);
     }
 
     public class TalkViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
