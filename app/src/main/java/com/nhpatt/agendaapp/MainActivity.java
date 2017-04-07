@@ -2,6 +2,7 @@ package com.nhpatt.agendaapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -13,6 +14,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AbstractActivityWithPresenter<TalkPresenter> implements View.OnClickListener {
 
@@ -53,6 +55,11 @@ public class MainActivity extends AbstractActivityWithPresenter<TalkPresenter> i
             getPresenter().favoriteTalk(talk);
             adapter.notifyDataSetChanged();
         }
+    }
+
+    @OnClick(R.id.fab)
+    public void fabClicked() {
+        Snackbar.make(findViewById(R.id.main_content), "FAB clicked!", Snackbar.LENGTH_SHORT).show();
     }
 
     public void paintTalks(List<Talk> elements) {
