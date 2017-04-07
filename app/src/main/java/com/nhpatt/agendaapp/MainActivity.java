@@ -33,6 +33,7 @@ public class MainActivity extends AbstractActivityWithPresenter<TalkPresenter> i
         ButterKnife.bind(this);
 
         adapter = new TalkAdapter(this, new ArrayList<>(), this);
+        adapter.setHasStableIds(true);
         listView.setLayoutManager(new LinearLayoutManager(this));
         listView.setAdapter(adapter);
 
@@ -56,6 +57,14 @@ public class MainActivity extends AbstractActivityWithPresenter<TalkPresenter> i
             startActivity(intent);
         } else {
             getPresenter().favoriteTalk(talk);
+
+            Talk newTalk = new Talk("09:00", "Talk", "nhpatt", "");
+
+            if (talk.isFavorited()) {
+                adapter.getTalks().add(newTalk);
+            } else {
+                adapter.getTalks().remove(0);
+            }
             adapter.notifyDataSetChanged();
         }
     }
@@ -66,6 +75,6 @@ public class MainActivity extends AbstractActivityWithPresenter<TalkPresenter> i
     }
 
     public void paintTalks(List<Talk> elements) {
-        adapter.swapTalks(elements);
+        adapter.addTalks(elements);
     }
 }

@@ -23,8 +23,13 @@ public class TalkAdapter extends RecyclerView.Adapter<TalkAdapter.TalkViewHolder
         this.onClickListener = onClickListener;
     }
 
-    public void swapTalks(List<Talk> talks) {
-        this.talks = talks;
+    public List<Talk> getTalks() {
+        return talks;
+    }
+
+    public void addTalks(List<Talk> talks) {
+        this.talks.clear();
+        this.talks.addAll(talks);
         notifyDataSetChanged();
     }
 
