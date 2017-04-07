@@ -12,7 +12,13 @@ public class ExampleFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(
-                R.layout.fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment, container, false);
+
+        view.setX(-2000);
+        view.setAlpha(0.5f);
+
+        view.animate().setDuration(2000).alpha(1f).xBy(2030).start();
+
+        return view;
     }
 }
