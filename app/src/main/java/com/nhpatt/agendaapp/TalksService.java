@@ -1,7 +1,5 @@
 package com.nhpatt.agendaapp;
 
-import com.google.gson.JsonObject;
-
 import java.util.List;
 
 import retrofit2.Call;
@@ -16,7 +14,7 @@ public interface TalksService {
     Call<List<Talk>> allTalks();
 
     @POST("/talks")
-    Call<JsonObject> addTalk(@Body Talk talk);
+    Call<Void> addTalk(@Body Talk talk);
 
     @DELETE("/talks")
     Call<String> deleteTalks();

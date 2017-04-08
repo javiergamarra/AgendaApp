@@ -45,8 +45,10 @@ public class MainActivity extends AbstractActivityWithPresenter<TalkPresenter> i
         listView.setLayoutManager(new LinearLayoutManager(this));
         listView.setAdapter(adapter);
 
+        ExampleFragment fragment = new ExampleFragment();
+        fragment.setPresenter(getPresenter());
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_container, new ExampleFragment()).commit();
+                .add(R.id.fragment_container, fragment).commit();
     }
 
     @Override

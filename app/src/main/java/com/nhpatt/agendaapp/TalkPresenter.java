@@ -50,10 +50,22 @@ public class TalkPresenter implements Presenter {
 
     private void loadTalks() {
         if (talks.isEmpty()) {
-            new Thread(new TalkProcessor()).start();
+            TalksInteractor talksInteractor = new TalksInteractor();
+            talksInteractor.listTalks();
         } else {
             activity.paintTalks(talks);
         }
+    }
+
+    public static void addTalk(Talk talk) {
+        TalksInteractor talksInteractor = new TalksInteractor();
+        talksInteractor.addTalk(talk);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(Talk talk) {
+        this.talks.add(talk);
+        activity.paintTalks(this.talks);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -95,4 +107,5 @@ public class TalkPresenter implements Presenter {
                     }
                 }).check();
     }
+
 }

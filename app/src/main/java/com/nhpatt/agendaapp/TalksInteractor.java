@@ -13,12 +13,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TalkProcessor implements Runnable {
 
+    private Retrofit retrofit = new Retrofit.Builder().baseUrl("http://data.agenda.wedeploy.io/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
+
     public void run() {
         try {
-            Retrofit retrofit = new Retrofit.Builder().baseUrl("http://data.agenda.wedeploy.io/")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-
             TalksService service = retrofit.create(TalksService.class);
 
             final Call<List<Talk>> call = service.allTalks();
@@ -30,4 +30,5 @@ public class TalkProcessor implements Runnable {
             Log.e(MyAgendaApp.TAG, e.getMessage());
         }
     }
+
 }

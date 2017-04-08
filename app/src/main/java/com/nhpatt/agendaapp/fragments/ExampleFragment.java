@@ -9,20 +9,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.nhpatt.agendaapp.R;
+import com.nhpatt.agendaapp.Talk;
+import com.nhpatt.agendaapp.TalkPresenter;
+import com.nhpatt.agendaapp.TalksInteractor;
 
-public class ExampleFragment extends Fragment implements TextWatcher {
+public class ExampleFragment extends Fragment implements TextWatcher, View.OnClickListener {
 
     private Button submit;
+    private TextView name;
+    private TextView description;
+    private TalkPresenter presenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment, container, false);
 
-        TextInputLayout name = (TextInputLayout) view.findViewById(R.id.name_edit);
-        name.getEditText().addTextChangedListener(this);
+        name = ((TextInputLayout) view.findViewById(R.id.name_edit)).getEditText();
+        name.addTextChangedListener(this);
+        description = ((TextInputLayout) view.findViewById(R.id.description_edit)).getEditText();
         submit = (Button) view.findViewById(R.id.submit_button);
+        submit.setOnClickListener(this);
 
         return view;
     }
@@ -42,4 +51,13 @@ public class ExampleFragment extends Fragment implements TextWatcher {
         submit.setEnabled(!s.toString().isEmpty());
     }
 
+    @Override
+    public void onClick(View v) {
+        TalkPresenter.addTalk(new Talk("", name.getText().toString(), "", ""));
+
+    }
+
+    public void setPresenter(TalkPresenter presenter) {
+        this.presenter = presenter;
+    }
 }
