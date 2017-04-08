@@ -26,7 +26,7 @@ public class TalkPresenter implements Presenter {
 
     private MainActivity activity;
     private List<Talk> talks = new ArrayList<>();
-    private boolean idle;
+    private boolean idle = true;
 
     public TalkPresenter(MainActivity activity) {
         this.activity = activity;
@@ -50,10 +50,10 @@ public class TalkPresenter implements Presenter {
     }
 
     private void loadTalks() {
-        idle = true;
 
         if (talks.isEmpty()) {
             TalksInteractor talksInteractor = new TalksInteractor();
+            idle = false;
             talksInteractor.listTalks();
         } else {
             activity.paintTalks(talks);
@@ -61,8 +61,9 @@ public class TalkPresenter implements Presenter {
     }
 
     public void addTalk(Talk talk) {
-        idle = true;
+
         TalksInteractor talksInteractor = new TalksInteractor();
+        idle = false;
         talksInteractor.addTalk(talk);
     }
 
@@ -71,7 +72,7 @@ public class TalkPresenter implements Presenter {
         this.talks.add(talk);
         activity.paintTalks(this.talks);
 
-        idle = false;
+        idle = true;
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -84,7 +85,7 @@ public class TalkPresenter implements Presenter {
         }
         activity.paintTalks(elements);
 
-        idle = false;
+        idle = true;
     }
 
     public void favoriteTalk(Talk talk) {
