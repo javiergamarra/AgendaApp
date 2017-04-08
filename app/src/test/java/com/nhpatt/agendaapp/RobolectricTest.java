@@ -12,7 +12,7 @@ import static junit.framework.TestCase.assertNotNull;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 23)
-public class MainActivityTest {
+public class RobolectricTest {
 
     @Test
     public void shouldRenderARecyclerViewView() throws Exception {
