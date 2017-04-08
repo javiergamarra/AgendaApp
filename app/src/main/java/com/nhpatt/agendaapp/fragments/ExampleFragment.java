@@ -11,17 +11,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.nhpatt.agendaapp.MainActivity;
 import com.nhpatt.agendaapp.R;
 import com.nhpatt.agendaapp.Talk;
 import com.nhpatt.agendaapp.TalkPresenter;
-import com.nhpatt.agendaapp.TalksInteractor;
 
 public class ExampleFragment extends Fragment implements TextWatcher, View.OnClickListener {
 
     private Button submit;
     private TextView name;
     private TextView description;
-    private TalkPresenter presenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,11 +52,8 @@ public class ExampleFragment extends Fragment implements TextWatcher, View.OnCli
 
     @Override
     public void onClick(View v) {
-        TalkPresenter.addTalk(new Talk("", name.getText().toString(), "", ""));
+        ((MainActivity) getActivity()).getPresenter().addTalk(new Talk("", name.getText().toString(), "", ""));
 
     }
 
-    public void setPresenter(TalkPresenter presenter) {
-        this.presenter = presenter;
-    }
 }

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.test.espresso.IdlingResource;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -23,13 +24,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AbstractActivityWithPresenter<TalkPresenter> implements View.OnClickListener {
+public class MainActivity extends AbstractActivityWithPresenter<TalkPresenter> implements View.OnClickListener, IdlingResource {
 
     @BindView(R.id.list)
     RecyclerView listView;
     private TalkAdapter adapter;
     @BindView(R.id.fab)
     FloatingActionButton fab;
+    private ResourceCallback callback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,6 @@ public class MainActivity extends AbstractActivityWithPresenter<TalkPresenter> i
         listView.setAdapter(adapter);
 
         ExampleFragment fragment = new ExampleFragment();
-        fragment.setPresenter(getPresenter());
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, fragment).commit();
     }
@@ -124,5 +125,23 @@ public class MainActivity extends AbstractActivityWithPresenter<TalkPresenter> i
         });
 
         anim.start();
+    }
+
+    @Override
+    public String getName() {
+        return MainActivity.class.getName();
+    }
+
+    @Override
+    public boolean isIdleNow() {
+        if (getPresenter().isIdle() && callback != null) {
+            callback.onTransitionToIdle();
+        }
+        return getPresenter().isIdle();
+    }
+
+    @Override
+    public void registerIdleTransitionCallback(ResourceCallback callback) {
+        this.callback = callback;
     }
 }
