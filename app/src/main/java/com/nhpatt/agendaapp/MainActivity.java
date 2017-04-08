@@ -1,16 +1,18 @@
 package com.nhpatt.agendaapp;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.transition.TransitionManager;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.ViewAnimationUtils;
 
 import com.nhpatt.agendaapp.fragments.ExampleFragment;
 
@@ -73,13 +75,8 @@ public class MainActivity extends AbstractActivityWithPresenter<TalkPresenter> i
             }
             adapter.notifyDataSetChanged();
 
-            ViewGroup viewById = (ViewGroup) findViewById(R.id.main_content);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                TransitionManager.beginDelayedTransition(viewById);
-
-
-                View child = viewById.findViewById(R.id.fab);
-                child.setVisibility(View.INVISIBLE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                reveal(findViewById(R.id.main_content));
             }
         }
     }
@@ -91,5 +88,39 @@ public class MainActivity extends AbstractActivityWithPresenter<TalkPresenter> i
 
     public void paintTalks(List<Talk> elements) {
         adapter.addTalks(elements);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void reveal(View view) {
+
+        int cx = view.getWidth() / 2;
+        int cy = view.getHeight() / 2;
+
+        float finalRadius = (float) Math.hypot(cx, cy);
+
+        Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, 0, finalRadius);
+
+        view.setVisibility(View.VISIBLE);
+        anim.start();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void hide(View view) {
+        int cx = view.getWidth() / 2;
+        int cy = view.getHeight() / 2;
+
+        float initialRadius = (float) Math.hypot(cx, cy);
+
+        Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, initialRadius, 0);
+
+        anim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                view.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        anim.start();
     }
 }
