@@ -52,7 +52,9 @@ public class ExampleFragment extends Fragment implements TextWatcher, View.OnCli
 
     @Override
     public void onClick(View v) {
-        ((MainActivity) getActivity()).getPresenter().addTalk(new Talk("", name.getText().toString(), "", ""));
+        String title = name.getText().toString();
+        name.setText("");
+        ((MainActivity) getActivity()).getPresenter().addTalk(new Talk("", title, "", ""));
 
     }
 

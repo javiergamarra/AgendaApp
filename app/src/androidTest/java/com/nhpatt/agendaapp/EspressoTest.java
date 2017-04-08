@@ -19,6 +19,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+//import okhttp3.mockwebserver.MockResponse;
+//import okhttp3.mockwebserver.MockWebServer;
+
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
@@ -48,8 +54,12 @@ public class EspressoTest {
 
     @Test
     public void addTalk() {
+
+        MockWebServer server = new MockWebServer();
+        server.enqueue(new MockResponse().setResponseCode(404).setBody(""));
+
         ViewInteraction appCompatEditText = onView(childAtPosition(childAtPosition(withId(R.id.name_edit), 0), 0));
-        String stringToBeSet = "Hola!";
+        String stringToBeSet = "Hola2!";
         appCompatEditText.perform(replaceText(stringToBeSet), closeSoftKeyboard());
 
         ViewInteraction submitButton = onView(withId(R.id.submit_button));
