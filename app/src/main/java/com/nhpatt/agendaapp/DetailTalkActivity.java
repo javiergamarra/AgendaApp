@@ -45,10 +45,13 @@ public class DetailTalkActivity extends AppCompatActivity implements View.OnClic
 
         speakerBio = (TextView) findViewById(R.id.speaker_bio);
 
-        Picasso.with(this)
-                .load(talk.getPicture())
-                .resize(200, 200)
-                .into((ImageView) findViewById(R.id.speaker_image));
+        String picture = talk.getPicture();
+        if (picture != null) {
+            Picasso.with(this)
+                    .load(picture)
+                    .resize(200, 200)
+                    .into((ImageView) findViewById(R.id.speaker_image));
+        }
 
         loadLastTweet();
 
