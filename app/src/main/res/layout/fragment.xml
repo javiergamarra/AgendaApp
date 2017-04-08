@@ -38,12 +38,13 @@
         </android.support.design.widget.TextInputLayout>
 
         <Button
-            android:id="@+id/submit_talk"
+            android:id="@+id/submit_button"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/description_edit"
             android:background="@color/colorPrimary"
+            android:enabled="false"
             android:text="@string/add_talk" />
     </RelativeLayout>
 </android.support.v7.widget.CardView>
